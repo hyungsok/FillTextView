@@ -96,7 +96,8 @@
                 android:background="#0000cc"
                 android:ellipsize="middle"
                 android:focusableInTouchMode="true"
-                android:singleLine="true"
+                android:singleLine="false"
+                android:maxLines="2"
                 android:text="[MIDDLE]Hi make this a very long string that wraps at least 4 lines, seriously make it really really long so it gets cut off at the fourth line not joke. Just do it! "
                 android:textColor="#ffffff" />
 
@@ -186,8 +187,7 @@
                 android:background="#0000cc"
                 android:ellipsize="middle"
                 android:focusableInTouchMode="true"
-                android:singleLine="false"
-                android:maxLines="2"
+                android:singleLine="true"
                 android:text="[MIDDLE]Hi make this a very long string that wraps at least 4 lines, seriously make it really really long so it gets cut off at the fourth line not joke. Just do it! "
                 android:textColor="#ffffff" />
         </LinearLayout>

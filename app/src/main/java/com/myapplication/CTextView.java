@@ -69,6 +69,7 @@ public class CTextView extends TextView {
         Log.d(LOG_TAG, "\t-LineCount : " + getLineCount());
 
         if (getEllipsize() == TextUtils.TruncateAt.START) {
+            // 해당 속성은 지원 안함
             return strText;
         }
 
@@ -81,7 +82,8 @@ public class CTextView extends TextView {
             // 입력한 텍스트를 지정한 길이에 맞게 계산하여 길이를 리턴
             endValue = textPaint.breakText(tempStrText, true, breakWidth, null);
             if (endValue > 0) {
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB && getEllipsize() == TextUtils.TruncateAt.END) {
+                if (getEllipsize() == TextUtils.TruncateAt.END &&
+                        Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB ) {
                     // 진져브래드 버전에서이고 TextUtils.TruncateAt.END 속성이면 뒤에 ... 붙여주기
                     if (line == getLineCount()) {
                         // 맨마지막 줄
@@ -91,7 +93,8 @@ public class CTextView extends TextView {
                         sb.append(tempStrText.substring(0, endValue)).append("\n");
                     }
                 } else {
-                    if (getEllipsize() == TextUtils.TruncateAt.MIDDLE && line == getLineCount()) {
+                    if (getEllipsize() == TextUtils.TruncateAt.MIDDLE &&
+                            line == getLineCount()) {
                         // MIDDLE이면 중간에 ...표시 해주고
                         int halfValue = endValue / 2;
                         sb.append(tempStrText.substring(0, halfValue - 1)).append("...");
