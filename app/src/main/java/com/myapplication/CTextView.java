@@ -109,7 +109,8 @@ public class CTextView extends TextView {
             line++;
         } while (endValue > 0);
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB && getEllipsize() == TextUtils.TruncateAt.END) {
+        if (getEllipsize() == TextUtils.TruncateAt.END &&
+                Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
             // 줄바꿈기호가 없기 때문에 그대로 텍스트 올려주기
             return sb.toString();
         }
