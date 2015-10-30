@@ -34,11 +34,6 @@ public class CTextView extends TextView {
         }
     }
 
-    @Override
-    public void setMaxLines(int maxlines) {
-        super.setMaxLines(maxlines);
-    }
-
     /**
      *
      * @param text
@@ -73,7 +68,7 @@ public class CTextView extends TextView {
         Log.d(LOG_TAG, "\t-Ellipsize : " + getEllipsize());
         Log.d(LOG_TAG, "\t-LineCount : " + getLineCount());
 
-        if (getEllipsize() == TextUtils.TruncateAt.START || getEllipsize() == TextUtils.TruncateAt.MIDDLE) {
+        if (getEllipsize() == TextUtils.TruncateAt.START) {
             return strText;
         }
 
@@ -81,22 +76,32 @@ public class CTextView extends TextView {
         int endValue;
 
         int line = 1;
+        String tempStrText = strText;
         do {
             // 입력한 텍스트를 지정한 길이에 맞게 계산하여 길이를 리턴
-            endValue = textPaint.breakText(strText, true, breakWidth, null);
+            endValue = textPaint.breakText(tempStrText, true, breakWidth, null);
             if (endValue > 0) {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB && getEllipsize() == TextUtils.TruncateAt.END) {
                     // 진져브래드 버전에서이고 TextUtils.TruncateAt.END 속성이면 뒤에 ... 붙여주기
                     if (line == getLineCount()) {
-                        sb.append(strText.substring(0, endValue - 2)).append("...");
+                        // 맨마지막 줄
+                        sb.append(tempStrText.substring(0, endValue - 2)).append("...");
                         break;
                     } else {
-                        sb.append(strText.substring(0, endValue)).append("\n");
+                        sb.append(tempStrText.substring(0, endValue)).append("\n");
                     }
                 } else {
-                    sb.append(strText.substring(0, endValue)).append("\n");
+                    if (getEllipsize() == TextUtils.TruncateAt.MIDDLE && line == getLineCount()) {
+                        // MIDDLE이면 중간에 ...표시 해주고
+                        int halfValue = endValue / 2;
+                        sb.append(tempStrText.substring(0, halfValue - 1)).append("...");
+                        // 맨마지막 텍스트를 짤라서 붙여줌
+                        sb.append(strText.substring((strText.length() - halfValue), strText.length())).append("\n");
+                    } else {
+                        sb.append(tempStrText.substring(0, endValue)).append("\n");
+                    }
                 }
-                strText = strText.substring(endValue);
+                tempStrText = tempStrText.substring(endValue);
             }
             line++;
         } while (endValue > 0);
