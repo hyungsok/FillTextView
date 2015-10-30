@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/hyungsoklee/Documents/workspace/MyApplication/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="4fcf0b1879f8caf497c073e1432d398e9e2988c1">
+        <dex dex="/Users/hyungsoklee/Documents/workspace/MyApplication/app/build/intermediates/pre-dexed/debug/classes-369130f727435cbe929d27170a88605a3a35b6b8.jar" />
+    </item>
+    <item
+        jar="/Users/hyungsoklee/Documents/workspace/MyApplication/app/libs/commons-collections-3.2.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="761ea405b9b37ced573d2df0d1e3a4e0f9edc668">
+        <dex dex="/Users/hyungsoklee/Documents/workspace/MyApplication/app/build/intermediates/pre-dexed/debug/commons-collections-3.2.1-655a5b51f1efe8241720487ee9b6e585551ef74b.jar" />
+    </item>
+    <item
+        jar="/Users/hyungsoklee/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.0/support-annotations-23.0.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="990e7f98a7bad86a40b1f0bcfeb039023afd0839">
+        <dex dex="/Users/hyungsoklee/Documents/workspace/MyApplication/app/build/intermediates/pre-dexed/debug/support-annotations-23.0.0-6a7e119ebc26666bc05eacbd897d380576cc65d8.jar" />
+    </item>
+    <item
+        jar="/Users/hyungsoklee/Documents/sourceTree/FillTextView/app/libs/commons-collections-3.2.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="761ea405b9b37ced573d2df0d1e3a4e0f9edc668">
+        <dex dex="/Users/hyungsoklee/Documents/sourceTree/FillTextView/app/build/intermediates/pre-dexed/debug/commons-collections-3.2.1-4886b9781ebfee5cdb068f93448be8e722a0c37a.jar" />
+    </item>
+    <item
+        jar="/Users/hyungsoklee/Documents/sourceTree/FillTextView/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="8413c27b45b7fe61dca4a98159f65e2cee215f5a">
+        <dex dex="/Users/hyungsoklee/Documents/sourceTree/FillTextView/app/build/intermediates/pre-dexed/debug/classes-bf3546a3444eddd65f9fd024d1f8666810d41853.jar" />
+    </item>
+    <item
+        jar="/Users/hyungsoklee/Documents/sourceTree/FillTextView/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="4fcf0b1879f8caf497c073e1432d398e9e2988c1">
+        <dex dex="/Users/hyungsoklee/Documents/sourceTree/FillTextView/app/build/intermediates/pre-dexed/debug/classes-ef038358cbca37ce3aa15d446e51c56b30cb107d.jar" />
+    </item>
+    <item
+        jar="/Users/hyungsoklee/Documents/workspace/MyApplication/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.0/jars/libs/internal_impl-23.0.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="8bd336eeae661e8311330284897ee07f8ebaa297">
+        <dex dex="/Users/hyungsoklee/Documents/workspace/MyApplication/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.0-8f44c14788b41da3516f9cbdc3a3b6e2bec1825a.jar" />
+    </item>
+    <item
+        jar="/Users/hyungsoklee/Documents/sourceTree/FillTextView/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.0/jars/libs/internal_impl-23.0.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="8bd336eeae661e8311330284897ee07f8ebaa297">
+        <dex dex="/Users/hyungsoklee/Documents/sourceTree/FillTextView/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.0-bc6f0bbf588231cf6370b4a6ba34fc4910dc9c9b.jar" />
+    </item>
+    <item
+        jar="/Users/hyungsoklee/Documents/workspace/MyApplication/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="8413c27b45b7fe61dca4a98159f65e2cee215f5a">
+        <dex dex="/Users/hyungsoklee/Documents/workspace/MyApplication/app/build/intermediates/pre-dexed/debug/classes-c24dabe73e2f69acdf0c9fa1a7c72aa5991379e4.jar" />
+    </item>
+
+</items>
