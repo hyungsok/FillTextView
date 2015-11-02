@@ -1,19 +1,32 @@
 package com.myapplication;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Paint;
-import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by hyungsoklee on 2015. 10. 29..
  */
 public class CTextView extends TextView {
+    // [final/static_property]====================[START]===================[final/static_property]
     private static final String LOG_TAG = CTextView.class.getSimpleName();
-
+    private static final String NEW_LINE = "\n";
+    private static final String BLANK = " ";
+    // [final/static_property]=====================[END]====================[final/static_property]
+    // [private/protected/public_property]========[START]=======[private/protected/public_property]
+    private int mMaxLines;
+    // [private/protected/public_property]=========[END]========[private/protected/public_property]
+    // [interface/enum/inner_class]===============[START]==============[interface/enum/inner_class]
+    // [interface/enum/inner_class]================[END]===============[interface/enum/inner_class]
+    // [inherited/listener_method]================[START]===============[inherited/listener_method]
     public CTextView(Context context) {
         super(context);
     }
@@ -24,6 +37,11 @@ public class CTextView extends TextView {
 
     public CTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        // Target Api(16) JELLY_BEAN
+        TypedArray a = context.obtainStyledAttributes(attrs,
+                new int[]{ android.R.attr.maxLines }, defStyleAttr, 0);
+        setMaxLines(a.getInt(0, Integer.MAX_VALUE));
+        a.recycle();
     }
 
     @Override
@@ -34,21 +52,36 @@ public class CTextView extends TextView {
         }
     }
 
+    @Override
+    public void setText(CharSequence text, BufferType type) {
+        super.setText(breakText(getPaint(), text, getBreakWidth()), type);
+    }
+
+    // [inherited/listener_method]=================[END]================[inherited/listener_method]
+    // [private_method]===========================[START]==========================[private_method]
     /**
      *
-     * @param text
+     * @return
      */
-    private void setBreakText(CharSequence text) {
-        if (text == null)
+    private int getBreakWidth() {
+        return getWidth() - this.getPaddingLeft() - this.getPaddingRight();
+    }
+
+    /**
+     *
+     * @param charSequence
+     */
+    private void setBreakText(CharSequence charSequence) {
+        if (charSequence == null)
             return;
 
         String breakText = breakText(
                 getPaint(),
-                text.toString(),
-                getWidth() - this.getPaddingLeft() - this.getPaddingRight());
+                charSequence,
+                getBreakWidth());
 
         if (breakText.equals(getText()) == false) {
-            setText(breakText);
+            super.setText(breakText);
         }
     }
 
@@ -56,67 +89,105 @@ public class CTextView extends TextView {
      * 줄바꿈
      *
      * @param textPaint  TextView의 Paint 객체
-     * @param strText    문자열
+     * @param charSequence    문자열
      * @param breakWidth 줄바꿈 하고 싶은 width값 지정
      * @return
      */
-    private String breakText(Paint textPaint, String strText, int breakWidth) {
-        Log.d(LOG_TAG, "breakText width : " + breakWidth);
-        if (breakWidth == 0) {
-            return strText;
+    private String breakText(Paint textPaint, CharSequence charSequence, int breakWidth) {
+        Log.d(LOG_TAG, "breakText width : " + breakWidth + " : " + charSequence);
+        if (charSequence == null) {
+            return null;
         }
-        Log.d(LOG_TAG, "\t-Ellipsize : " + getEllipsize());
-        Log.d(LOG_TAG, "\t-LineCount : " + getLineCount());
+
+        String texts = charSequence.toString();
+        if (breakWidth == 0) {
+            return texts;
+        }
 
         if (getEllipsize() == TextUtils.TruncateAt.START) {
             // 해당 속성은 지원 안함
-            return strText;
+            return texts;
         }
 
-        StringBuilder sb = new StringBuilder();
+        List<String> textList = new ArrayList<String>();
         int endValue;
-
-        int line = 1;
-        String tempStrText = strText;
+        String tempText = texts;
         do {
             // 입력한 텍스트를 지정한 길이에 맞게 계산하여 길이를 리턴
-            endValue = textPaint.breakText(tempStrText, true, breakWidth, null);
+            endValue = textPaint.breakText(tempText, true, breakWidth, null);
+            Log.d(LOG_TAG, "\t> endValue : " + endValue);
             if (endValue > 0) {
-                if (getEllipsize() == TextUtils.TruncateAt.END &&
-                        Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB ) {
-                    // 진져브래드 버전에서이고 TextUtils.TruncateAt.END 속성이면 뒤에 ... 붙여주기
-                    if (line == getLineCount()) {
-                        // 맨마지막 줄
-                        sb.append(tempStrText.substring(0, endValue - 2)).append("...");
-                        break;
-                    } else {
-                        sb.append(tempStrText.substring(0, endValue)).append("\n");
-                    }
-                } else {
-                    if (getEllipsize() == TextUtils.TruncateAt.MIDDLE &&
-                            line == getLineCount()) {
-                        // MIDDLE이면 중간에 ...표시 해주고
-                        int halfValue = endValue / 2;
-                        sb.append(tempStrText.substring(0, halfValue - 1)).append("...");
-                        // 맨마지막 텍스트를 짤라서 붙여줌
-                        sb.append(strText.substring((strText.length() - halfValue), strText.length())).append("\n");
-                    } else {
-                        sb.append(tempStrText.substring(0, endValue)).append("\n");
-                    }
-                }
-                tempStrText = tempStrText.substring(endValue);
+                String text = tempText.substring(0, endValue).replace(NEW_LINE, "") + NEW_LINE;
+                textList.add(text);
+                tempText = tempText.substring(endValue);
             }
-            line++;
         } while (endValue > 0);
 
-        if (getEllipsize() == TextUtils.TruncateAt.END &&
-                Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            // 줄바꿈기호가 없기 때문에 그대로 텍스트 올려주기
-            return sb.toString();
+        setMiddleText(textList, texts, textPaint, breakWidth);
+
+        StringBuilder sb = new StringBuilder();
+        for(String text : textList) {
+            Log.d(LOG_TAG, "\t> text : " + text);
+            if (BLANK.equals(text.substring(0, 1))) {
+                text = text.substring(1);
+            }
+            sb.append(text);
         }
 
         // 마지막 "\n"를 제거
-        String text = sb.toString().substring(0, sb.length() - 1);
-        return text;
+        String string = sb.toString().substring(0, sb.length() - 1);
+        Log.d(LOG_TAG, "result : " + string);
+        return string;
     }
+
+    /**
+     * TextView Middle 텍스트 처리
+     * @param textList
+     * @param texts
+     * @param textPaint
+     * @param breakWidth
+     */
+    private void setMiddleText(List<String> textList, String texts, Paint textPaint, int breakWidth) {
+        int maxLine = getMaxLines();
+        Log.d(LOG_TAG, "setMiddleText() MaxLine : " + maxLine);
+        if (getEllipsize() == TextUtils.TruncateAt.MIDDLE) {
+            if (textList.size() > maxLine && maxLine > 0) {
+                // 마지막 줄에서의 어디까지 글자를 쓸수있는지 확인
+                String endString = textList.get(maxLine - 1);
+                int endValue = textPaint.breakText(endString, true, breakWidth, null);
+                Log.d(LOG_TAG, "\t> endValue[middle] : " + endValue);
+
+                StringBuilder sb = new StringBuilder();
+                // MIDDLE이면 중간에 ...표시 해주고
+                int halfValue = endValue / 2;
+                sb.append(endString.substring(0, halfValue - 2)).append("...");
+                // 맨마지막 텍스트를 짤라서 붙여줌
+                sb.append(texts.substring((texts.length() + 2 - halfValue)).replace(NEW_LINE, ""));
+                sb.append(NEW_LINE);
+                Log.d(LOG_TAG, "\t- middle : " + sb.toString());
+
+                // Set Middle
+                textList.set(maxLine - 1, sb.toString());
+            }
+        }
+    }
+
+    // Target Api(16) JELLY_BEAN
+    @SuppressLint("Override")
+    public int getMaxLines() {
+        return mMaxLines;
+    }
+
+    @Override
+    public void setMaxLines(int maxLines) {
+        super.setMaxLines(maxLines);
+        mMaxLines = maxLines;
+    }
+    // [private_method]============================[END]===========================[private_method]
+    // [life_cycle_method]========================[START]=======================[life_cycle_method]
+    // [life_cycle_method]=========================[END]========================[life_cycle_method]
+    // [public_method]============================[START]===========================[public_method]
+    // [public_method]=============================[END]============================[public_method]
+    // [get/set]==================================[START]=================================[get/set]
+    // [get/set]===================================[END]==================================[get/set]
 }
