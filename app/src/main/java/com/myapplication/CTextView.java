@@ -120,6 +120,13 @@ public class CTextView extends TextView {
                 String text = tempText.substring(0, endValue).replace(NEW_LINE, "") + NEW_LINE;
                 textList.add(text);
                 tempText = tempText.substring(endValue);
+
+                // 앞에 공백이 있으며 빼고 처리
+                if (!TextUtils.isEmpty(tempText) && tempText.length() > 2) {
+                    if (BLANK.equals(tempText.substring(0, 1))) {
+                        tempText = tempText.substring(1);
+                    }
+                }
             }
         } while (endValue > 0);
 
@@ -128,9 +135,6 @@ public class CTextView extends TextView {
         StringBuilder sb = new StringBuilder();
         for(String text : textList) {
             Log.d(LOG_TAG, "\t> text : " + text);
-            if (BLANK.equals(text.substring(0, 1))) {
-                text = text.substring(1);
-            }
             sb.append(text);
         }
 
