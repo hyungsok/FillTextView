@@ -4,4 +4,6 @@
     <string name="hello_world">As I know, there is no such property for TextView. A /N /W /W /M /W /W W If you want to implement text wrapping by yourself, you can override TextView and Note that you have to specify text size, typeface etc to Paint instance.</string>
     <string name="koran_text">새누리당이 본격적으로 ‘색깔론’ 공세를 펴기 시작했다. 예상보다 역사교과서 국정화 반발 여론이 거세게 일자 북한과 친북단체 등을 거론하며 ‘반전’을 노리는 것으로 풀이된다. 새누리당 원유철 원내대표(53)는 29일 국회에서 열린 최고위원회의에서 언론 기사를 언급하며 “북한 통일전선부와 정찰총국 등 대남공작기관이 역사교과서 관련 반대 투쟁과 선동전을 전개하도록 하는 지령문을 보냈다고 한다”고 말했다.그러면서 “북한이 국내 종북세력에게 ‘반정부 투쟁선동 지령문’을 보낸 목적은 남남갈등을 유도하려는 전형적인 통일전선전술”이라고 주장했다.</string>
     <string name="action_settings">Settings</string>
+
+    <string name="ellipsis">...</string>
 </resources>
